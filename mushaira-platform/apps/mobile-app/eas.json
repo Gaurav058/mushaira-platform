@@ -1,7 +1,6 @@
 {
   "cli": {
-    "version": ">= 10.0.0",
-    "appVersionSource": "remote"
+    "version": ">= 10.0.0"
   },
   "build": {
     "preview": {
@@ -10,14 +9,12 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://192.168.0.103:3000/api/v1"
+        "EXPO_PUBLIC_API_URL": "http://192.168.0.103:3000/api/v1",
+        "NODE_ENV": "production"
       }
     },
     "preview-local": {
       "extends": "preview",
-      "android": {
-        "buildType": "apk"
-      },
       "env": {
         "EXPO_PUBLIC_API_URL": "http://192.168.0.103:3000/api/v1"
       }
