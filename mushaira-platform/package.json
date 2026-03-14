@@ -1,0 +1,28 @@
+{
+  "name": "mushaira-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mushaira & Kavi Sammelan Platform — Aeronex Technologies",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "yarn workspace @mushaira/api-server start:dev",
+    "dev:mobile": "yarn workspace @mushaira/mobile-app start",
+    "dev:organiser-admin": "yarn workspace @mushaira/organiser-admin dev",
+    "dev:super-admin": "yarn workspace @mushaira/super-admin dev",
+    "build:api": "yarn workspace @mushaira/api-server build",
+    "db:migrate": "yarn workspace @mushaira/api-server prisma:migrate",
+    "db:generate": "yarn workspace @mushaira/api-server prisma:generate",
+    "db:studio": "yarn workspace @mushaira/api-server prisma:studio"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "devDependencies": {
+    "ajv": "^8.18.0"
+  }
+}

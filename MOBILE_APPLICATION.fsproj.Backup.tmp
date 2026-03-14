@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Library.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="mushaira-platform\package.json" />
+    <Content Include="mushaira-platform\packages\shared-types\package.json" />
+    <Content Include="mushaira-platform\packages\shared-types\tsconfig.json" />
+    <Content Include="mushaira-platform\services\api-server\nest-cli.json" />
+    <Content Include="mushaira-platform\services\api-server\package.json" />
+    <Content Include="mushaira-platform\services\api-server\tsconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="mushaira-platform\.gitignore" />
+    <None Include="mushaira-platform\packages\shared-types\src\index.ts" />
+    <None Include="mushaira-platform\README.md" />
+    <None Include="mushaira-platform\services\api-server\.env.example" />
+    <None Include="mushaira-platform\services\api-server\prisma\schema.prisma" />
+    <None Include="mushaira-platform\services\api-server\prisma\seed.ts" />
+    <None Include="mushaira-platform\services\api-server\src\app.module.ts" />
+    <None Include="mushaira-platform\services\api-server\src\common\decorators\current-user.decorator.ts" />
+    <None Include="mushaira-platform\services\api-server\src\common\decorators\roles.decorator.ts" />
+    <None Include="mushaira-platform\services\api-server\src\common\dto\pagination.dto.ts" />
+    <None Include="mushaira-platform\services\api-server\src\common\filters\global-exception.filter.ts" />
+    <None Include="mushaira-platform\services\api-server\src\common\guards\jwt-auth.guard.ts" />
+    <None Include="mushaira-platform\services\api-server\src\common\guards\roles.guard.ts" />
+    <None Include="mushaira-platform\services\api-server\src\common\interceptors\response.interceptor.ts" />
+    <None Include="mushaira-platform\services\api-server\src\common\prisma\prisma.module.ts" />
+    <None Include="mushaira-platform\services\api-server\src\common\prisma\prisma.service.ts" />
+    <None Include="mushaira-platform\services\api-server\src\config\configuration.ts" />
+    <None Include="mushaira-platform\services\api-server\src\config\validation.ts" />
+    <None Include="mushaira-platform\services\api-server\src\main.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\auth\auth.controller.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\auth\auth.module.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\auth\auth.service.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\auth\dto\auth.dto.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\auth\strategies\jwt.strategy.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\family-member\dto\family-member.dto.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\family-member\family-member.controller.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\family-member\family-member.module.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\family-member\family-member.service.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\user\dto\update-profile.dto.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\user\user.controller.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\user\user.module.ts" />
+    <None Include="mushaira-platform\services\api-server\src\modules\user\user.service.ts" />
+  </ItemGroup>
+
+</Project>

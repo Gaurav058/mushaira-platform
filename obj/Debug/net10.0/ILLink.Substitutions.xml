@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<linker>
+  <assembly fullname="MOBILE_APPLICATION">
+    <resource name="FSharpSignatureData.MOBILE_APPLICATION" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedData.MOBILE_APPLICATION" action="remove"></resource>
+    <resource name="FSharpSignatureDataB.MOBILE_APPLICATION" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedDataB.MOBILE_APPLICATION" action="remove"></resource>
+    <resource name="FSharpOptimizationData.MOBILE_APPLICATION" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedData.MOBILE_APPLICATION" action="remove"></resource>
+    <resource name="FSharpOptimizationDataB.MOBILE_APPLICATION" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedDataB.MOBILE_APPLICATION" action="remove"></resource>
+    <resource name="FSharpOptimizationInfo.MOBILE_APPLICATION" action="remove"></resource>
+    <resource name="FSharpSignatureInfo.MOBILE_APPLICATION" action="remove"></resource>
+  </assembly>
+</linker>

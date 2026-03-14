@@ -1,0 +1,22 @@
+node_modules/
+dist/
+build/
+.next/
+.expo/
+# Android/iOS generated native projects (created by expo prebuild)
+apps/mobile-app/android/
+apps/mobile-app/ios/
+*.env
+.env.local
+.env.*.local
+!*.env.example
+*.log
+.DS_Store
+coverage/
+prisma/migrations/
+*.pem
+.turbo/
+yarn-error.log
+# Generated APK files
+*.apk
+*.aab

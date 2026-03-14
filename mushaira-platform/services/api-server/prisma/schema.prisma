@@ -1,0 +1,384 @@
+// ─────────────────────────────────────────────────────────────────────────────
+//  Mushaira & Kavi Sammelan Platform — Prisma Schema
+//  Aeronex Technologies
+// ─────────────────────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+//  Enums
+// ─────────────────────────────────────────────
+
+enum Role {
+  SUPER_ADMIN
+  ORGANISER
+  SCANNER
+  GUEST
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  LIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum RegistrationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  WAITLIST
+  CHECKED_IN
+}
+
+enum ScanResult {
+  SUCCESS
+  ALREADY_SCANNED
+  INVALID_QR
+  EXPIRED
+  WRONG_GATE
+  REJECTED_REGISTRATION
+}
+
+enum NotificationType {
+  REGISTRATION_RECEIVED
+  APPROVAL_GRANTED
+  REGISTRATION_REJECTED
+  REMINDER_24HR
+  REMINDER_3HR
+  EVENT_LIVE
+  THANK_YOU
+}
+
+enum NotificationChannel {
+  WHATSAPP
+  EMAIL
+  PUSH
+}
+
+// ─────────────────────────────────────────────
+//  User
+// ─────────────────────────────────────────────
+
+model User {
+  id              String         @id @default(uuid())
+  mobile_number   String         @unique
+  full_name       String?
+  email           String?        @unique
+  age             Int?
+  gender          String?
+  city            String?
+  profession      String?
+  profile_photo   String?
+  role            Role           @default(GUEST)
+  approval_status ApprovalStatus @default(APPROVED)
+  notes           String?
+  is_active       Boolean        @default(true)
+  last_login_at   DateTime?
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+
+  family_members  FamilyMember[]
+  registrations   EventRegistration[]
+  notifications   Notification[]
+  otp_sessions    OTPSession[]
+  entry_logs      EntryLog[]
+  audit_logs      AuditLog[]
+
+  @@index([mobile_number])
+  @@index([role])
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────
+//  Family Members
+// ─────────────────────────────────────────────
+
+model FamilyMember {
+  id         String   @id @default(uuid())
+  user_id    String
+  full_name  String
+  age        Int?
+  gender     String?
+  relation   String?
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("family_members")
+}
+
+// ─────────────────────────────────────────────
+//  OTP Sessions
+// ─────────────────────────────────────────────
+
+model OTPSession {
+  id         String   @id @default(uuid())
+  mobile     String
+  otp_code   String
+  attempts   Int      @default(0)
+  is_used    Boolean  @default(false)
+  ip_address String?
+  user_agent String?
+  expires_at DateTime
+  created_at DateTime @default(now())
+
+  user User? @relation(fields: [mobile], references: [mobile_number])
+
+  @@index([mobile])
+  @@index([expires_at])
+  @@map("otp_sessions")
+}
+
+// ─────────────────────────────────────────────
+//  Organiser
+// ─────────────────────────────────────────────
+
+model Organiser {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  mobile      String
+  logo        String?
+  website     String?
+  description String?
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  events Event[]
+
+  @@map("organisers")
+}
+
+// ─────────────────────────────────────────────
+//  Category
+// ─────────────────────────────────────────────
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  color       String?
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+
+  registrations EventRegistration[]
+
+  @@map("categories")
+}
+
+// ─────────────────────────────────────────────
+//  Gate
+// ─────────────────────────────────────────────
+
+model Gate {
+  id         String   @id @default(uuid())
+  event_id   String
+  name       String
+  code       String
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+
+  event      Event      @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  entry_logs EntryLog[]
+
+  @@unique([event_id, code])
+  @@index([event_id])
+  @@map("gates")
+}
+
+// ─────────────────────────────────────────────
+//  Event
+// ─────────────────────────────────────────────
+
+model Event {
+  id                 String      @id @default(uuid())
+  organiser_id       String
+  title              String
+  subtitle           String?
+  poster             String?
+  venue              String
+  date_time          DateTime
+  map_link           String?
+  description        String?
+  registration_start DateTime
+  registration_end   DateTime
+  approval_required  Boolean     @default(true)
+  capacity           Int
+  family_allowed     Boolean     @default(true)
+  status             EventStatus @default(DRAFT)
+  created_at         DateTime    @default(now())
+  updated_at         DateTime    @updatedAt
+
+  organiser     Organiser           @relation(fields: [organiser_id], references: [id])
+  registrations EventRegistration[]
+  gates         Gate[]
+  sponsors      Sponsor[]
+
+  @@index([status])
+  @@index([date_time])
+  @@map("events")
+}
+
+// ─────────────────────────────────────────────
+//  Event Registration
+// ─────────────────────────────────────────────
+
+model EventRegistration {
+  id             String             @id @default(uuid())
+  event_id       String
+  user_id        String
+  category_id    String?
+  gate_id        String?
+  status         RegistrationStatus @default(PENDING)
+  family_members Json?
+  notes          String?
+  reviewed_by    String?
+  reviewed_at    DateTime?
+  created_at     DateTime           @default(now())
+  updated_at     DateTime           @updatedAt
+
+  event    Event     @relation(fields: [event_id], references: [id])
+  user     User      @relation(fields: [user_id], references: [id])
+  category Category? @relation(fields: [category_id], references: [id])
+  qr_pass  QRPass?
+
+  @@unique([event_id, user_id])
+  @@index([event_id])
+  @@index([user_id])
+  @@index([status])
+  @@map("event_registrations")
+}
+
+// ─────────────────────────────────────────────
+//  QR Pass
+// ─────────────────────────────────────────────
+
+model QRPass {
+  id              String    @id @default(uuid())
+  registration_id String    @unique
+  event_id        String
+  qr_code         String    @unique
+  secure_hash     String
+  qr_image_url    String?
+  is_used         Boolean   @default(false)
+  used_at         DateTime?
+  expires_at      DateTime?
+  created_at      DateTime  @default(now())
+
+  registration EventRegistration @relation(fields: [registration_id], references: [id])
+  entry_logs   EntryLog[]
+
+  @@index([qr_code])
+  @@index([event_id])
+  @@map("qr_passes")
+}
+
+// ─────────────────────────────────────────────
+//  Entry Log
+// ─────────────────────────────────────────────
+
+model EntryLog {
+  id          String     @id @default(uuid())
+  qr_pass_id  String
+  gate_id     String
+  scanned_by  String?
+  user_id     String?
+  result      ScanResult
+  notes       String?
+  scanned_at  DateTime   @default(now())
+
+  qr_pass QRPass @relation(fields: [qr_pass_id], references: [id])
+  gate    Gate   @relation(fields: [gate_id], references: [id])
+  user    User?  @relation(fields: [user_id], references: [id])
+
+  @@index([qr_pass_id])
+  @@index([gate_id])
+  @@index([scanned_at])
+  @@map("entry_logs")
+}
+
+// ─────────────────────────────────────────────
+//  Notification
+// ─────────────────────────────────────────────
+
+model Notification {
+  id         String              @id @default(uuid())
+  user_id    String
+  type       NotificationType
+  title      String
+  message    String
+  channel    NotificationChannel
+  is_sent    Boolean             @default(false)
+  sent_at    DateTime?
+  error      String?
+  metadata   Json?
+  created_at DateTime            @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
+  @@index([type])
+  @@index([is_sent])
+  @@map("notifications")
+}
+
+// ─────────────────────────────────────────────
+//  Sponsor
+// ─────────────────────────────────────────────
+
+model Sponsor {
+  id         String   @id @default(uuid())
+  event_id   String
+  name       String
+  logo       String?
+  tier       String?
+  website    String?
+  created_at DateTime @default(now())
+
+  event Event @relation(fields: [event_id], references: [id], onDelete: Cascade)
+
+  @@index([event_id])
+  @@map("sponsors")
+}
+
+// ─────────────────────────────────────────────
+//  Audit Log
+// ─────────────────────────────────────────────
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  user_id    String?
+  action     String
+  entity     String
+  entity_id  String?
+  old_value  Json?
+  new_value  Json?
+  ip_address String?
+  created_at DateTime @default(now())
+
+  user User? @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
+  @@index([entity])
+  @@index([created_at])
+  @@map("audit_logs")
+}

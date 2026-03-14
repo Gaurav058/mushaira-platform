@@ -1,0 +1,55 @@
+# ── Dependencies ──────────────────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+# ── Build outputs ─────────────────────────────────────────────────────────────
+dist/
+build/
+.next/
+out/
+
+# ── Expo / React Native ───────────────────────────────────────────────────────
+.expo/
+apps/mobile-app/android/
+apps/mobile-app/ios/
+*.apk
+*.aab
+*.ipa
+
+# ── Environment files (never commit secrets) ─────────────────────────────────
+*.env
+.env.local
+.env.*.local
+!*.env.example
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ── OS files ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE / Editor ──────────────────────────────────────────────────────────────
+.vscode/settings.json
+.idea/
+.vs/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.bak
+*.fsproj
+
+# ── Database ──────────────────────────────────────────────────────────────────
+prisma/migrations/
+*.db
+*.sqlite
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+*.pem
+.turbo/
+coverage/

@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "Mushaira",
+    "slug": "mushaira-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "mushaira",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#5B2C83"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.aeronex.mushaira"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#5B2C83"
+      },
+      "package": "com.aeronex.mushaira",
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.INTERNET"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-file-system"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "apiUrl": "http://localhost:3000/api/v1",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ea3ddd32-8acc-4b95-99a9-0dcdba36358c"
+      }
+    },
+    "owner": "gaurav_05"
+  }
+}
