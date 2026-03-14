@@ -1,25 +1,24 @@
-import { useEffect, useState } from 'react';
-import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
+import { useEffect, useState, useCallback } from 'react';
+import * as Network from 'expo-network';
 
 export function useNetworkStatus() {
   const [isOnline, setIsOnline] = useState(true);
-  const [isConnecting, setIsConnecting] = useState(false);
 
-  useEffect(() => {
-    // Get initial state
-    NetInfo.fetch().then((state: NetInfoState) => {
-      setIsOnline(state.isConnected ?? true);
-    });
-
-    const unsubscribe = NetInfo.addEventListener((state: NetInfoState) => {
-      const connected = state.isConnected ?? false;
-      if (!connected && isOnline) setIsConnecting(true);
-      else setIsConnecting(false);
-      setIsOnline(connected);
-    });
-
-    return unsubscribe;
+  const check = useCallback(async () => {
+    try {
+      const state = await Network.getNetworkStateAsync();
+      setIsOnline(state.isConnected ?? false);
+    } catch {
+      setIsOnline(true); // default to online on error
+    }
   }, []);
 
-  return { isOnline, isConnecting };
+  useEffect(() => {
+    check();
+    // Poll every 5 seconds — expo-network has no event listener API
+    const interval = setInterval(check, 5000);
+    return () => clearInterval(interval);
+  }, [check]);
+
+  return { isOnline };
 }
