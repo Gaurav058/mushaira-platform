@@ -22,6 +22,9 @@
         "backgroundColor": "#5B2C83"
       },
       "package": "com.aeronex.mushaira",
+      "compileSdkVersion": 34,
+      "targetSdkVersion": 34,
+      "minSdkVersion": 24,
       "permissions": [
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE",
@@ -34,8 +37,7 @@
     },
     "plugins": [
       "expo-router",
-      "expo-secure-store",
-      "expo-file-system"
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
