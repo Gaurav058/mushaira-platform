@@ -4,7 +4,8 @@
   "private": true,
   "description": "Mushaira & Kavi Sammelan Platform — Aeronex Technologies",
   "workspaces": [
-    "apps/*",
+    "apps/organiser-admin",
+    "apps/super-admin",
     "services/*",
     "packages/*"
   ],

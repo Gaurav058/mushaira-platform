@@ -5,14 +5,11 @@
   "build": {
     "preview": {
       "distribution": "internal",
-      "resourceClass": "large",
       "android": {
-        "buildType": "apk",
-        "image": "latest"
+        "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://192.168.0.103:3000/api/v1",
-        "NODE_ENV": "production"
+        "EXPO_PUBLIC_API_URL": "http://192.168.0.103:3000/api/v1"
       }
     },
     "preview-local": {
