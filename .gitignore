@@ -53,3 +53,10 @@ prisma/migrations/
 *.pem
 .turbo/
 coverage/
+# .NET build artifacts
+obj/
+bin/
+*.dll
+*.pdb
+*.xml
+*.cache
