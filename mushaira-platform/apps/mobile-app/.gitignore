@@ -4,3 +4,15 @@
 
 expo-env.d.ts
 # @end expo-cli
+
+# Do not commit lock files — EAS generates its own clean install
+package-lock.json
+yarn.lock
+
+# Android/iOS native generated projects
+android/
+ios/
+
+# Local env
+.env.local
+.env.*.local
