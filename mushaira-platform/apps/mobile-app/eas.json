@@ -9,13 +9,13 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://192.168.0.103:3000/api/v1"
+        "EXPO_PUBLIC_API_URL": "http://192.168.0.113:3000/api/v1"
       }
     },
     "preview-local": {
       "extends": "preview",
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://192.168.0.103:3000/api/v1"
+        "EXPO_PUBLIC_API_URL": "http://192.168.0.113:3000/api/v1"
       }
     },
     "production": {
